@@ -21,6 +21,9 @@ configure(allprojects) {
 
 project(':server') {
     dependencies {
+        compile 'com.sun.jersey:jersey-server:1.19'
+        compile 'com.sun.jersey:jersey-servlet:1.19'
+        compile 'com.sun.jersey:jersey-json:1.19'
         compile 'org.eclipse.jetty:jetty-webapp:9.3.7.v20160115'
     }
 }
