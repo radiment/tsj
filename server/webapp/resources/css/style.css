@@ -1,0 +1,65 @@
+html {
+    height:100%;
+}
+body {
+    font-family: "Arial", "Helvetica", "sans-serif";
+    font-size: 14px;
+    height: 100%;
+}
+
+footer, nav, header, section, aside {
+    display: block
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'DejaVu Serif', serif;
+    color: blue;
+}
+
+.content-centered-box {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+footer {
+    color: #5c5c5c;
+    background-color: #e6ecec;
+    height: 110px;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+.content-box {
+    float: left;
+    padding-right: 320px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.right-panel {
+    float: left;
+    width: 300px;
+    margin-left: -300px;
+}
+
+.actions-block {
+    font-family: tahoma, arial, serif;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #f2f2f2;
+}
+
+h1.title {
+    margin-bottom: 8px;
+    color: #333;
+    font: 30px/118% normal Verdana,Tahoma,sans-serif;
+}
