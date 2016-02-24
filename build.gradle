@@ -1,3 +1,7 @@
+def jerseyVersion = '1.19'
+def springVersion = '4.2.4.RELEASE'
+def springSecurityVersion = "4.0.3.RELEASE"
+def thymeleafVersion = "3.0.0.BETA02"
 
 configure(allprojects) {
     group 'org.shara'
@@ -21,9 +25,15 @@ configure(allprojects) {
 
 project(':server') {
     dependencies {
-        compile 'com.sun.jersey:jersey-server:1.19'
-        compile 'com.sun.jersey:jersey-servlet:1.19'
-        compile 'com.sun.jersey:jersey-json:1.19'
+        compile "org.springframework.security:spring-security-web:$springSecurityVersion"
+        compile "org.springframework:spring-web:$springVersion"
+        compile("com.sun.jersey.contribs:jersey-spring:$jerseyVersion") {
+            exclude group: 'org.springframework'
+        }
+        compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
+        compile "com.sun.jersey:jersey-server:$jerseyVersion"
+        compile "com.sun.jersey:jersey-servlet:$jerseyVersion"
+        compile "com.sun.jersey:jersey-json:$jerseyVersion"
         compile 'org.eclipse.jetty:jetty-webapp:9.3.7.v20160115'
     }
 }
