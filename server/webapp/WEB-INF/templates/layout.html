@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="page">
 <head>
-    <link rel="shortcut icon" href="resources/img/favicon.ico">
+    <link rel="shortcut icon" href="../../resources/img/favicon.ico" th:href="@{/resources/img/favicon.ico}">
     <meta charset="utf-8"/>
     <meta name="theme-color" content="#0173c1">
     <title>ТСЖ</title>
 
     <meta name="description" content="Портал ТСЖ"/>
 
-    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/style.css" th:href="@{/resources/css/style.css}"/>
 
     <base href="/">
 </head>
@@ -37,11 +39,7 @@
             <!-- Начало поста -->
             <section class="article">
                 <h1 class="article-header">Сайт агрегатор по управлению конторами ТСЖ</h1>
-                <article class="postBox">
-                    <!-- ......... -->
-                    Товарищества собственников жилья
-
-                </article>
+                <article class="postBox" th:include="this :: content"></article>
             </section>
             <!-- Начало поста -->
         </aside>
@@ -56,13 +54,10 @@
     </div>
 </section>
 
-<footer class="footer"><!-- Футер сайта -->
-    <!-- ......... -->
-    <div class="content-centered-box">
-        (c)Andrey Dyomin
-    </div>
-</footer>
+<footer class="footer" th:include="fragments/footer :: footer"></footer>
 
-<script src="resources/js/jquery-2.2.0.js"></script>
+<script src="../../resources/js/jquery-2.2.0.js" th:src="@{/resources/js/jquery-2.2.0.js}"> </script>
+
+<div th:replace="this :: scripts"></div>
 </body>
 </html>

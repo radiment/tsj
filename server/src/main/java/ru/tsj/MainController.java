@@ -2,31 +2,52 @@ package ru.tsj;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tsj.bean.HelloService;
+import ru.tsj.mappers.UnitMapper;
+import ru.tsj.services.UnitService;
+import ru.tsj.unit.Unit;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
+
+import static javax.ws.rs.core.Response.ok;
+import static ru.tsj.util.ViewUtil.view;
 
 @Path("/")
 @Component
-public class MainController extends AbstractTemplateController {
+@Consumes("application/json")
+public class MainController {
 
     @Autowired
-    HelloService helloService;
+    UnitService unitService;
+
+    @Autowired
+    UnitMapper unitMapper;
 
     @GET
+    @Path("hello")
     @Produces("text/plain")
     public String main() {
-        return helloService.hello("world");
+        return unitService.hello("world");
     }
 
     @GET
-    @Path("tl")
+    @Path("units")
+    @Produces("application/json")
+    public List<Unit> units() {
+        return unitService.getUnits();
+    }
+
+    @PUT
+    @Path("units")
+    public void addUnit(Unit unit) {
+        unitMapper.addUnit(unit);
+    }
+
+    @GET
     @Produces("text/html")
     public Response thymeleaf() {
-        return ok("hello");
+        return ok(view("hello", unitMapper.getUnits())).build();
     }
 
 }

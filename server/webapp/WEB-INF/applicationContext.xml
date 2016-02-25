@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
     <context:annotation-config/>
 
     <context:component-scan base-package="ru.tsj"/>
@@ -13,6 +14,7 @@
           class="org.thymeleaf.templateresolver.ServletContextTemplateResolver"
           p:prefix="/WEB-INF/templates/"
           p:suffix=".html"
+          p:cacheable="false"
           p:templateMode="HTML5">
         <constructor-arg ref="servletContext"/>
     </bean>
@@ -20,6 +22,30 @@
     <bean id="templateEngine"
           class="org.thymeleaf.spring4.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <jdbc:embedded-database id="dataSource" type="H2">
+        <!--<jdbc:script location="classpath:db/sql/create-db.sql" />-->
+        <!--<jdbc:script location="classpath:db/sql/insert-data.sql" />-->
+    </jdbc:embedded-database>
+
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource" />
+        <property name="changeLog" value="classpath:db-changelog.xml" />
+
+        <!--
+        contexts specifies the runtime contexts to use.
+        -->
+        <property name="contexts" value="test, production" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="unitMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="ru.tsj.mappers.UnitMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
 
 </beans>
